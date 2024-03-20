@@ -24,5 +24,8 @@
 		"svelte": "^4.2.7",
 		"vite": "^5.0.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"mysql2": "^3.9.2"
+	}
 }
