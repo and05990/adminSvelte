@@ -1,10 +1,13 @@
+import { mysqlconnFn } from "../../hooks.server";
+import { fail, redirect } from "@sveltejs/kit";
+import CryptoJs from 'crypto-js';
+
 export const actions = {
-    login: async({ request }) => {
+    login: async ({ request }) => {
         try {
             const data = await request.formData();
             const username = data.get('username');
-            const password = data.get('password');
-            console.log(username, password);
+            const password = CryptoJs.MD5(data.get('password')).toString();
 
             if (!username || !password) {
                 return fail(400, {
@@ -17,12 +20,24 @@ export const actions = {
                 .then(([rows, fields]) => {
                     return rows[0];
                 });
-            
+
+            if (user && user.password === password) {
+                return {
+                    status: 303,
+                    headers: {
+                        location: '/Home'
+                    }
+                };
+            } else {
+                return fail(400, {
+                    message: 'Credenziali non valide'
+                });
+            }
         } catch (error) {
-            console.error(error);
+            console.error("Errore: ", error);
             return fail(500, {
                 message: 'Errore interno'
             });
         }
     }
-}
+};
