@@ -4,7 +4,6 @@ import CryptoJs from 'crypto-js';
 
 export const actions = {
     login: async ({ request }) => {
-        try {
             const data = await request.formData();
             const username = data.get('username');
             const password = CryptoJs.MD5(data.get('password')).toString();
@@ -21,18 +20,12 @@ export const actions = {
                     return rows[0];
                 });
 
-            if (user && user.password === password) {
-                throw redirect(300, '/Home');
-            } else {
+            if (user.password !== password) {
                 return fail(400, {
                     message: 'Credenziali non valide'
                 });
             }
-        } catch (error) {
-            console.error("Errore: ", error);
-            return fail(500, {
-                message: 'Errore interno'
-            });
-        }
+
+            throw redirect(303, '/Home');
     }
 };

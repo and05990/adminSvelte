@@ -1,11 +1,9 @@
 <script>
-	import Header from '$lib/Header.svelte';
 	export let data;
 	const dipendenti = data.dipendenti;
 </script>
 
 <main>
-	<Header />
     <h2>Lista dipendenti</h2>
     <table border='1' class='tabella'>
         <tr>

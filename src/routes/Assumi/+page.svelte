@@ -1,5 +1,4 @@
 <script>
-    import Header from "$lib/Header.svelte";
     export let data;
     export let form;
     const ruoli = data.ruoli;
@@ -7,7 +6,6 @@
 </script>
 
 <main>
-    <Header />
     <form action="?/assumi" method="post">
         <h2>Assumi un nuovo dipendente</h2>
         <p>{form?.message || ''}</p>
