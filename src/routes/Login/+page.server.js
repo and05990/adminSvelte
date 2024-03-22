@@ -22,12 +22,7 @@ export const actions = {
                 });
 
             if (user && user.password === password) {
-                return {
-                    status: 303,
-                    headers: {
-                        location: '/Home'
-                    }
-                };
+                throw redirect(300, '/Home');
             } else {
                 return fail(400, {
                     message: 'Credenziali non valide'
